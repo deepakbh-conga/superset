@@ -319,7 +319,9 @@ export default function DateFilterLabel(props: DateFilterControlProps) {
         )}
         {!validTimeRange && (
           <IconWrapper className="warning">
-            <Icons.ErrorSolidSmall iconColor={theme.colors.error.base} />
+            <Icons.ExclamationCircleOutlined
+              iconColor={theme.colors.error.base}
+            />
             <span className="text error">{evalResponse}</span>
           </IconWrapper>
         )}
@@ -351,27 +353,28 @@ export default function DateFilterLabel(props: DateFilterControlProps) {
 
   const title = (
     <IconWrapper>
-      <Icons.EditAlt iconColor={theme.colors.grayscale.base} />
+      <Icons.EditOutlined />
       <span className="text">{t('Edit time range')}</span>
     </IconWrapper>
   );
-
   const popoverContent = (
     <ControlPopover
-      placement="right"
+      autoAdjustOverflow={false}
       trigger="click"
+      placement="right"
       content={overlayContent}
       title={title}
-      defaultVisible={show}
-      visible={show}
-      onVisibleChange={toggleOverlay}
+      defaultOpen={show}
+      open={show}
+      onOpenChange={toggleOverlay}
       overlayStyle={{ width: '600px' }}
-      getPopupContainer={triggerNode =>
+      destroyTooltipOnHide
+      getPopupContainer={nodeTrigger =>
         isOverflowingFilterBar
-          ? (triggerNode.parentNode as HTMLElement)
+          ? (nodeTrigger.parentNode as HTMLElement)
           : document.body
       }
-      destroyTooltipOnHide
+      overlayClassName="time-range-popover"
     >
       <Tooltip placement="top" title={tooltipTitle}>
         <DateLabel
